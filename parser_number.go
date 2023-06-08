@@ -382,8 +382,7 @@ func (p *parser) matchSeasonAndEpisodePattern(w string, tkn *token) bool {
 	if strings.Index(w, match[0]) != 0 {
 		return false
 	}
-	seasonNumber, _ := strconv.Atoi(match[1])
-	if seasonNumber == 0 {
+	if stringToInt(match[1]) == 0 {
 		return false
 	}
 

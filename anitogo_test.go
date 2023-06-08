@@ -2,7 +2,7 @@ package anitogo
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"os"
 	"testing"
 )
@@ -39,7 +39,7 @@ func TestAnitogoParse(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer jsonFile.Close()
-	byteValue, err := ioutil.ReadAll(jsonFile)
+	byteValue, err := io.ReadAll(jsonFile)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -210,7 +210,7 @@ func BenchmarkAnitogoParse(b *testing.B) {
 		b.Fatal(err)
 	}
 	defer jsonFile.Close()
-	byteValue, err := ioutil.ReadAll(jsonFile)
+	byteValue, err := io.ReadAll(jsonFile)
 	if err != nil {
 		b.Fatal(err)
 	}

@@ -112,8 +112,9 @@ func isMostlyLatinString(str string) bool {
 }
 
 func stringToInt(str string) int {
-	if strings.Index(str, ".") != -1 {
-		str = str[:strings.Index(str, ".")]
+	dotIndex := strings.IndexByte(str, '.')
+	if dotIndex != -1 {
+		str = str[:dotIndex]
 	}
 	i, err := strconv.Atoi(str)
 	if err != nil {
