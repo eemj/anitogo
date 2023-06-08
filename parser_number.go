@@ -327,7 +327,7 @@ func (p *parser) matchEpisodePattern(w string, tkn *token) bool {
 }
 
 func (p *parser) matchSingleEpisodePattern(w string, tkn *token) bool {
-	pattern := "(\\d{1,3})[vV](\\d)$"
+	pattern := "(\\d{1,4})[vV](\\d)$"
 	re := regexp.MustCompile(pattern)
 	match := re.FindStringSubmatch(w)
 	if match == nil {
@@ -346,7 +346,7 @@ func (p *parser) matchSingleEpisodePattern(w string, tkn *token) bool {
 }
 
 func (p *parser) matchMultiEpisodePattern(w string, tkn *token) bool {
-	pattern := "(\\d{1,3})(?:[vV](\\d))?[-~&+](\\d{1,3})(?:[vV](\\d))?$"
+	pattern := "(\\d{1,4})(?:[vV](\\d))?[-~&+](\\d{1,4})(?:[vV](\\d))?$"
 	re := regexp.MustCompile(pattern)
 	match := re.FindStringSubmatch(w)
 	if match == nil {
@@ -373,13 +373,17 @@ func (p *parser) matchMultiEpisodePattern(w string, tkn *token) bool {
 }
 
 func (p *parser) matchSeasonAndEpisodePattern(w string, tkn *token) bool {
-	pattern := "(?i)S?(\\d{1,2})(?:-S?(\\d{1,2}))?(?:x|[ ._-x]?E)(\\d{1,3})(?:-E?(\\d{1,3}))?$"
+	pattern := "(?i)S?(\\d{1,2})(?:-S?(\\d{1,2}))?(?:x|[ ._-x]?E)(\\d{1,4})(?:-E?(\\d{1,4}))?(?:[vV](\\d))?$"
 	re := regexp.MustCompile(pattern)
 	match := re.FindStringSubmatch(w)
 	if match == nil {
 		return false
 	}
 	if strings.Index(w, match[0]) != 0 {
+		return false
+	}
+	seasonNumber, _ := strconv.Atoi(match[1])
+	if seasonNumber == 0 {
 		return false
 	}
 
@@ -459,7 +463,7 @@ func (p *parser) matchNumberSignPattern(w string, tkn *token) bool {
 		return false
 	}
 
-	pattern := "#(\\d{1,3})(?:[-~&+](\\d{1,3}))?(?:[vV](\\d))?$"
+	pattern := "#(\\d{1,4})(?:[-~&+](\\d{1,4}))?(?:[vV](\\d))?$"
 	re := regexp.MustCompile(pattern)
 	match := re.FindStringSubmatch(w)
 	if match == nil {
@@ -479,11 +483,11 @@ func (p *parser) matchNumberSignPattern(w string, tkn *token) bool {
 }
 
 func (p *parser) matchJapaneseCounterPattern(w string, tkn *token) bool {
-	if strings.IndexRune(w, '\u8A71') == -1 {
+	if !strings.ContainsRune(w, '\u8A71') {
 		return false
 	}
 
-	pattern := "(\\d{1,3})話$"
+	pattern := "(\\d{1,4})話$"
 	re := regexp.MustCompile(pattern)
 	match := re.FindStringSubmatch(w)
 	if match == nil {

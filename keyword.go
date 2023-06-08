@@ -86,7 +86,7 @@ func newKeywordManager() *keywordManager {
 		"ANDROID"})
 	kwm.add(elementCategoryEpisodePrefix, keywordOptionsDefault, []string{
 		"EP", "EP.", "EPS", "EPS.", "EPISODE", "EPISODE.", "EPISODES",
-		"CAPITULO", "EPISODIO", "FOLGE"})
+		"CAPITULO", "EPISODIO", "EPIS\u00F3DIO", "FOLGE"})
 	kwm.add(elementCategoryEpisodePrefix, keywordOptionsInvalid, []string{
 		"E", "\x7B2C"}) // Single letter episode keywords are not valid tokens
 	kwm.add(elementCategoryFileExtension, keywordOptionsDefault, []string{
@@ -126,6 +126,7 @@ func newKeywordManager() *keywordManager {
 		"HI10", "HI10P", "HI444", "HI444P", "HI444PP",
 		"H264", "H265", "H.264", "H.265", "X264", "X265", "X.264",
 		"AVC", "HEVC", "HEVC2", "DIVX", "DIVX5", "DIVX6", "XVID",
+		"AV1",
 		// Video format
 		"AVI", "RMVB", "WMV", "WMV3", "WMV9",
 		// Video quality
